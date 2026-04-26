@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter_Tight, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import NoiseOverlay from "@/components/ui/NoiseOverlay";
+import Cursor from "@/components/ui/Cursor";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -114,6 +115,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <NoiseOverlay />
+        <Cursor />
         {children}
       </body>
     </html>
