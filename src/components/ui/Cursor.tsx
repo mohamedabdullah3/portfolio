@@ -64,8 +64,8 @@ export default function Cursor() {
           width: hovering ? 36 : 10,
           height: hovering ? 36 : 10,
           backgroundColor: hovering
-            ? "rgba(255,107,53,0.12)"
-            : "rgba(255,107,53,0.95)",
+            ? "rgba(255,122,69,0.12)"
+            : "rgba(255,122,69,0.95)",
           opacity: hidden ? 0 : 1,
         }}
         transition={{ type: "spring", stiffness: 380, damping: 26 }}

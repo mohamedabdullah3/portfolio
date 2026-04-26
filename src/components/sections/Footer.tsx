@@ -5,12 +5,19 @@ import Link from "next/link";
 import { Linkedin, Instagram } from "lucide-react";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
+  { href: "/#about", label: "About" },
+  { href: "/#work", label: "Work" },
+  { href: "/#services", label: "Services" },
+  { href: "/posts", label: "Posts" },
   { href: "/cv", label: "CV" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#contact", label: "Contact" },
 ];
+
+const BUILD_DATE = new Date().toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
 function CairoTime() {
   const [now, setNow] = useState<string>("");
@@ -83,6 +90,9 @@ export default function Footer() {
             <CairoTime />
           </p>
         </div>
+        <p className="mt-4 font-serif text-xs italic text-[var(--color-fg-dim)]">
+          Built with care in Cairo. Last updated: {BUILD_DATE}
+        </p>
       </div>
     </footer>
   );

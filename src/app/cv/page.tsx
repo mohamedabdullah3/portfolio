@@ -15,22 +15,23 @@ export default function CVPage() {
     <div className="min-h-screen print-light">
       {/* Toolbar */}
       <header className="no-print sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 sm:px-8">
+        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-5 sm:px-8">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to portfolio
+            <span className="hidden sm:inline">Back to portfolio</span>
+            <span className="sm:hidden">Back</span>
           </Link>
           <PrintButton />
         </div>
       </header>
 
-      <article className="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
+      <article className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
         {/* Header */}
-        <section className="border-b border-[var(--color-border)] pb-10">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <section className="print-avoid-break pb-10">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="font-display text-[clamp(2.25rem,4.5vw,3.75rem)] font-semibold leading-[1] tracking-[-0.04em]">
                 {cvData.name}
@@ -44,13 +45,20 @@ export default function CVPage() {
                 <MapPin className="h-3.5 w-3.5" /> {cvData.location}
               </li>
               <li className="inline-flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5" /> {cvData.email}
+                <Mail className="h-3.5 w-3.5" />
+                <a
+                  href={`mailto:${cvData.email}`}
+                  className="hover:text-[var(--color-fg)]"
+                >
+                  {cvData.email}
+                </a>
               </li>
               <li className="inline-flex items-center gap-2">
                 <Phone className="h-3.5 w-3.5" /> {cvData.phone}
               </li>
             </ul>
           </div>
+          <hr className="accent-divider mt-10" aria-hidden />
         </section>
 
         {/* Summary */}
@@ -62,10 +70,13 @@ export default function CVPage() {
 
         {/* Highlights */}
         <Section label="Highlights">
-          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-4">
+          <div className="print-grid grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-4">
             {cvData.highlights.map((h) => (
-              <div key={h.label} className="bg-[var(--color-bg)] p-5">
-                <div className="font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-accent)] tabular">
+              <div
+                key={h.label}
+                className="print-avoid-break bg-[var(--color-bg)] p-5"
+              >
+                <div className="font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-accent)] print-accent tabular">
                   {h.value}
                 </div>
                 <div className="mt-2 text-[0.7rem] uppercase tracking-[0.22em] text-[var(--color-fg-muted)]">
@@ -78,23 +89,20 @@ export default function CVPage() {
 
         {/* Experience */}
         <Section label="Experience">
-          <ul className="space-y-9">
+          <ul className="space-y-12">
             {cvData.experience.map((e, i) => (
-              <li key={i} className="grid gap-2 md:grid-cols-12">
-                <div className="md:col-span-3 text-sm text-[var(--color-fg-muted)]">
-                  {e.period}
-                  <div className="mt-0.5 text-xs text-[var(--color-fg-dim)]">
-                    {e.location}
-                  </div>
-                </div>
-                <div className="md:col-span-9">
-                  <h3 className="font-display text-xl font-medium tracking-[-0.02em] sm:text-2xl">
+              <li
+                key={i}
+                className="print-avoid-break grid gap-3 md:grid-cols-12"
+              >
+                <div className="md:col-span-9 md:order-1">
+                  <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-[1.65rem]">
                     {e.role}
                   </h3>
-                  <div className="mt-1 text-sm text-[var(--color-accent)]">
+                  <div className="mt-1.5 text-sm font-medium text-[var(--color-accent)] print-accent">
                     {e.company}
                   </div>
-                  <ul className="mt-4 space-y-2.5 text-[var(--color-fg-muted)]">
+                  <ul className="mt-5 space-y-2.5 text-[var(--color-fg-muted)]">
                     {e.bullets.map((b, j) => (
                       <li key={j} className="flex gap-3">
                         <span
@@ -105,6 +113,12 @@ export default function CVPage() {
                       </li>
                     ))}
                   </ul>
+                </div>
+                <div className="text-sm text-[var(--color-fg-muted)] md:col-span-3 md:order-2 md:text-right">
+                  <div>{e.period}</div>
+                  <div className="mt-0.5 text-xs text-[var(--color-fg-dim)]">
+                    {e.location}
+                  </div>
                 </div>
               </li>
             ))}
@@ -117,7 +131,7 @@ export default function CVPage() {
             {cvData.skills.map((s) => (
               <li
                 key={s}
-                className="rounded-xl border border-[var(--color-border)] bg-white/[0.015] px-4 py-2.5 text-sm text-[var(--color-fg-muted)]"
+                className="print-avoid-break rounded-xl border border-[var(--color-border)] bg-white/[0.015] px-4 py-2.5 text-sm text-[var(--color-fg-muted)]"
               >
                 {s}
               </li>
@@ -127,9 +141,12 @@ export default function CVPage() {
 
         {/* Tools */}
         <Section label="Tools">
-          <div className="space-y-5">
+          <div className="space-y-6">
             {Object.entries(cvData.tools).map(([k, v]) => (
-              <div key={k} className="grid gap-3 md:grid-cols-12">
+              <div
+                key={k}
+                className="print-avoid-break grid gap-3 md:grid-cols-12"
+              >
                 <div className="md:col-span-3 text-[0.7rem] uppercase tracking-[0.22em] text-[var(--color-fg-dim)]">
                   {k}
                 </div>
@@ -150,17 +167,22 @@ export default function CVPage() {
 
         {/* Education */}
         <Section label="Education">
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {cvData.education.map((e, i) => (
-              <li key={i} className="grid gap-1 md:grid-cols-12">
-                <div className="md:col-span-3 text-sm text-[var(--color-fg-muted)]">
-                  {e.period}
-                </div>
-                <div className="md:col-span-9">
-                  <div className="font-medium">{e.degree}</div>
-                  <div className="text-sm text-[var(--color-fg-muted)]">
+              <li
+                key={i}
+                className="print-avoid-break grid gap-2 md:grid-cols-12"
+              >
+                <div className="md:col-span-9 md:order-1">
+                  <div className="font-display text-lg font-semibold">
+                    {e.degree}
+                  </div>
+                  <div className="mt-1 text-sm text-[var(--color-fg-muted)]">
                     {e.school}
                   </div>
+                </div>
+                <div className="text-sm text-[var(--color-fg-muted)] md:col-span-3 md:order-2 md:text-right">
+                  {e.period}
                 </div>
               </li>
             ))}
@@ -188,7 +210,7 @@ export default function CVPage() {
             {cvData.languages.map((l) => (
               <li
                 key={l.name}
-                className="flex items-center justify-between rounded-xl border border-[var(--color-border)] px-4 py-3"
+                className="print-avoid-break flex items-center justify-between rounded-xl border border-[var(--color-border)] px-4 py-3"
               >
                 <span className="font-medium">{l.name}</span>
                 <span className="text-sm text-[var(--color-fg-muted)]">
@@ -211,10 +233,16 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="border-b border-[var(--color-border)] py-10 last:border-b-0">
-      <h2 className="mb-7 text-[0.7rem] uppercase tracking-[0.28em] text-[var(--color-fg-dim)]">
-        {label}
-      </h2>
+    <section className="print-avoid-break py-12 first:pt-0 last:pb-0">
+      <div className="mb-7 flex items-center gap-4">
+        <h2 className="text-[0.7rem] uppercase tracking-[0.28em] text-[var(--color-accent)] print-accent">
+          {label}
+        </h2>
+        <span
+          aria-hidden
+          className="h-px flex-1 bg-[var(--color-border)]"
+        />
+      </div>
       {children}
     </section>
   );

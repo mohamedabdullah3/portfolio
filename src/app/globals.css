@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0a0b;
-  --color-bg-elevated: #111114;
+  --color-bg: #0e0e10;
+  --color-bg-elevated: #16161a;
   --color-fg: #f5f1eb;
-  --color-fg-muted: rgba(245, 241, 235, 0.62);
-  --color-fg-dim: rgba(245, 241, 235, 0.38);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
-  --color-accent: #ff6b35;
-  --color-accent-soft: rgba(255, 107, 53, 0.12);
+  --color-fg-muted: rgba(245, 241, 235, 0.65);
+  --color-fg-dim: rgba(245, 241, 235, 0.4);
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-accent: #ff7a45;
+  --color-accent-hover: #ff8f5c;
+  --color-accent-soft: rgba(255, 122, 69, 0.12);
   --color-cream: #f5f1eb;
 
   --font-display: var(--font-display);
@@ -20,10 +21,19 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --bg-primary: #0e0e10;
+    --bg-surface: #16161a;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --accent: #ff7a45;
+    --accent-hover: #ff8f5c;
+    --text-primary: #f5f1eb;
+    --text-secondary: rgba(245, 241, 235, 0.65);
+    --text-muted: rgba(245, 241, 235, 0.4);
   }
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -38,7 +48,7 @@
   }
 
   ::selection {
-    background: var(--color-accent);
+    background-color: var(--color-accent);
     color: var(--color-bg);
   }
 
@@ -82,8 +92,8 @@
   .glow-radial {
     background: radial-gradient(
       ellipse 60% 50% at 50% 50%,
-      rgba(255, 107, 53, 0.18) 0%,
-      rgba(255, 107, 53, 0.05) 35%,
+      rgba(255, 122, 69, 0.18) 0%,
+      rgba(255, 122, 69, 0.05) 35%,
       transparent 70%
     );
   }
@@ -102,6 +112,25 @@
   .bg-elevated {
     background: var(--color-bg-elevated);
   }
+
+  .accent-divider {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 122, 69, 0.35) 50%,
+      transparent 100%
+    );
+  }
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+.animate-status-pulse {
+  animation: status-pulse 2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -128,7 +157,7 @@
 @media print {
   @page {
     size: A4;
-    margin: 18mm;
+    margin: 0.75in;
   }
   html, body {
     background: #ffffff !important;
@@ -147,6 +176,18 @@
   }
   .print-light .accent,
   .print-light .accent * { color: #c2410c !important; }
+  .print-light .print-accent,
+  .print-light .print-accent * { color: #c2410c !important; }
+  .print-avoid-break,
+  .print-light section,
+  .print-light article,
+  .print-light li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .print-light .print-grid {
+    grid-template-columns: 1fr !important;
+  }
   a { text-decoration: none !important; color: inherit !important; }
   .grain::before { display: none !important; }
 }

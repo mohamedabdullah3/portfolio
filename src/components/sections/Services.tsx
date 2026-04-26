@@ -33,7 +33,7 @@ export default function Services() {
                   className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
                     background:
-                      "radial-gradient(80% 60% at 50% 0%, rgba(255,107,53,0.12), transparent 60%)",
+                      "radial-gradient(80% 60% at 50% 0%, rgba(255,122,69,0.12), transparent 60%)",
                   }}
                 />
                 <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)]">

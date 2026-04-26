@@ -54,11 +54,13 @@ All visual tokens live as Tailwind v4 `@theme` variables in
 
 | Token | Value | Use |
 |---|---|---|
-| `--color-bg` | `#0a0a0b` | Page background |
-| `--color-fg` | `#f5f1eb` | Primary text |
-| `--color-accent` | `#ff6b35` | Confident orange-amber accent |
+| `--color-bg` | `#0e0e10` | Page background (warm dark) |
+| `--color-bg-elevated` | `#16161a` | Card / surface background |
+| `--color-fg` | `#f5f1eb` | Primary text (warm off-white) |
+| `--color-accent` | `#ff7a45` | Warm orange accent |
+| `--color-accent-hover` | `#ff8f5c` | Brighter accent for hover states |
 | `--color-cream` | `#f5f1eb` | Highlighted card surfaces |
-| `--color-border` | `rgba(255,255,255,0.08)` | Hairline card borders |
+| `--color-border` | `rgba(255,255,255,0.06)` | Hairline card borders |
 
 Typography rules — large display headings (`clamp(2rem, 5vw, 7rem)`), tight
 letter-spacing (`-0.04em`), tabular numbers for metrics, italic Instrument Serif
@@ -87,6 +89,18 @@ accent words inside headings.
 The `/cv` route includes a print stylesheet (A4, 18mm margins, light theme
 overrides). Click **Download as PDF** at the top right — it triggers
 `window.print()`, which Chrome/Edge can save directly as PDF.
+
+## Analytics (Mixpanel)
+
+Page views and key events (CTA clicks, contact channel clicks, case study views,
+form submissions) are tracked through Mixpanel. To enable tracking:
+
+1. Create a project in [Mixpanel](https://mixpanel.com) and copy the project token.
+2. Add `NEXT_PUBLIC_MIXPANEL_TOKEN` to your environment — locally in `.env`,
+   and in Vercel **Project → Settings → Environment Variables** for both
+   Preview and Production.
+3. Without the token, `initMixpanel` / `trackEvent` short-circuit, so the site
+   continues to run normally with no analytics calls.
 
 ## Contact form
 

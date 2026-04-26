@@ -22,7 +22,7 @@ export default function About() {
                 className="absolute inset-0"
                 style={{
                   background:
-                    "radial-gradient(120% 80% at 30% 20%, rgba(255,107,53,0.45) 0%, rgba(255,107,53,0.08) 38%, transparent 70%), linear-gradient(180deg, #1a1a1f 0%, #0a0a0b 100%)",
+                    "radial-gradient(120% 80% at 30% 20%, rgba(255,122,69,0.45) 0%, rgba(255,122,69,0.08) 38%, transparent 70%), linear-gradient(180deg, #1d1d22 0%, #0e0e10 100%)",
                 }}
               />
               <div className="absolute inset-0 grid place-items-center">

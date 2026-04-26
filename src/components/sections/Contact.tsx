@@ -4,13 +4,24 @@ import { useState, type FormEvent } from "react";
 import { MessageCircle, Mail, CalendarClock, Send } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
+import { trackEvent } from "@/lib/mixpanel";
 
-const channels = [
+type ContactMethod = "whatsapp" | "email" | "calendly";
+
+const channels: {
+  title: string;
+  blurb: string;
+  href: string;
+  cta: string;
+  method: ContactMethod;
+  Icon: typeof MessageCircle;
+}[] = [
   {
     title: "WhatsApp",
     blurb: "Fastest way to reach me",
-    href: "https://wa.me/201146555118",
+    href: "https://wa.me/201020352362",
     cta: "Open WhatsApp",
+    method: "whatsapp",
     Icon: MessageCircle,
   },
   {
@@ -18,6 +29,7 @@ const channels = [
     blurb: "For longer briefs and proposals",
     href: "mailto:mohamed.abdullah3877@gmail.com",
     cta: "Send email",
+    method: "email",
     Icon: Mail,
   },
   {
@@ -25,6 +37,7 @@ const channels = [
     blurb: "30-min discovery call",
     href: "#",
     cta: "Pick a slot",
+    method: "calendly",
     Icon: CalendarClock,
   },
 ];
@@ -44,6 +57,11 @@ export default function Contact() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const payload = Object.fromEntries(data.entries());
+    trackEvent("Form Submitted", {
+      name: payload.name,
+      company: payload.company,
+      budget: payload.budget,
+    });
     // Placeholder — wire to Formspree / Resend later via .env
     // eslint-disable-next-line no-console
     console.log("Contact form submission:", payload);
@@ -101,6 +119,9 @@ export default function Contact() {
                 </div>
                 <a
                   href={c.href}
+                  onClick={() =>
+                    trackEvent("Contact Clicked", { method: c.method })
+                  }
                   target={isExternal && c.href.startsWith("http") ? "_blank" : undefined}
                   rel={isExternal && c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="mt-8 inline-flex items-center gap-2 text-sm text-[var(--color-fg)] transition-colors group-hover:text-[var(--color-accent)]"

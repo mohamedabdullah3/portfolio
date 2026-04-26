@@ -3,8 +3,8 @@ export const cvData = {
   role: "Performance Media Buyer",
   location: "Cairo, Egypt",
   email: "mohamed.abdullah3877@gmail.com",
-  phone: "+20 114 655 5118",
-  whatsapp: "https://wa.me/201146555118",
+  phone: "+20 102 035 2362",
+  whatsapp: "https://wa.me/201020352362",
   linkedin: "#",
 
   summary:

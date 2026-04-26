@@ -1,8 +1,15 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { trackEvent } from "@/lib/mixpanel";
 
 const headline = [
   { word: "I", italic: false },
@@ -11,12 +18,26 @@ const headline = [
   { word: "ad", italic: false },
   { word: "accounts", italic: false },
   { word: "into", italic: false },
-  { word: "revenue", italic: true, accent: true },
-  { word: "engines.", italic: true, accent: true },
+];
+
+const rotatingPhrases = [
+  "revenue engines.",
+  "scaling stories.",
+  "ROAS machines.",
+  "growth systems.",
 ];
 
 export default function Hero() {
   const reduce = useReducedMotion();
+  const [phraseIndex, setPhraseIndex] = useState(0);
+
+  useEffect(() => {
+    if (reduce) return;
+    const id = setInterval(() => {
+      setPhraseIndex((i) => (i + 1) % rotatingPhrases.length);
+    }, 3000);
+    return () => clearInterval(id);
+  }, [reduce]);
 
   const container: Variants = {
     hidden: {},
@@ -47,7 +68,7 @@ export default function Hero() {
         className="pointer-events-none absolute right-[-10%] top-[20%] h-[420px] w-[420px] rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,107,53,0.22) 0%, transparent 60%)",
+            "radial-gradient(circle, rgba(255,122,69,0.22) 0%, transparent 60%)",
         }}
         animate={
           reduce
@@ -89,14 +110,30 @@ export default function Hero() {
                   variants={word}
                   className={
                     "inline-block " +
-                    (w.italic ? "italic font-serif font-normal " : "") +
-                    (w.accent ? "text-[var(--color-accent)] " : "")
+                    (w.italic ? "italic font-serif font-normal " : "")
                   }
                   style={{ marginRight: "0.22em" }}
                 >
                   {w.word}
                 </motion.span>
               ))}
+              <span
+                className="relative inline-block overflow-hidden align-baseline"
+                style={{ minWidth: "min(100%, 12ch)" }}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={rotatingPhrases[phraseIndex]}
+                    initial={{ y: reduce ? 0 : "100%", opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: reduce ? 0 : "-100%", opacity: 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="inline-block italic font-serif font-normal text-[var(--color-accent)]"
+                  >
+                    {rotatingPhrases[phraseIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </motion.h1>
 
             <motion.p
@@ -118,10 +155,31 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.85, ease: "easeOut" }}
               className="mt-10 flex flex-wrap items-center gap-3"
             >
-              <Button href="#work" variant="primary" size="lg" withArrow>
+              <Button
+                href="#work"
+                variant="primary"
+                size="lg"
+                withArrow
+                onClick={() =>
+                  trackEvent("CTA Clicked", {
+                    location: "hero",
+                    cta: "view_work",
+                  })
+                }
+              >
                 View My Work
               </Button>
-              <Button href="/cv" variant="secondary" size="lg">
+              <Button
+                href="/cv"
+                variant="secondary"
+                size="lg"
+                onClick={() =>
+                  trackEvent("CTA Clicked", {
+                    location: "hero",
+                    cta: "download_cv",
+                  })
+                }
+              >
                 Download CV
               </Button>
             </motion.div>

@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Counter from "@/components/ui/Counter";
 import Reveal from "@/components/ui/Reveal";
 
@@ -7,13 +10,37 @@ interface Metric {
   suffix?: string;
   decimals?: number;
   label: string;
+  source: string;
 }
 
 const metrics: Metric[] = [
-  { value: 1.15, prefix: "$", suffix: "M+", decimals: 2, label: "Purchase value generated" },
-  { value: 4.18, suffix: "x", decimals: 2, label: "Average ROAS" },
-  { value: 7797, suffix: "+", label: "Purchases tracked" },
-  { value: 400, suffix: "%+", label: "Peak sales growth" },
+  {
+    value: 1.15,
+    prefix: "$",
+    suffix: "M+",
+    decimals: 2,
+    label: "Purchase value generated",
+    source: "across Meta, Google, TikTok campaigns",
+  },
+  {
+    value: 4.18,
+    suffix: "x",
+    decimals: 2,
+    label: "Average ROAS",
+    source: "verified through Meta Ads Manager",
+  },
+  {
+    value: 7797,
+    suffix: "+",
+    label: "Purchases tracked",
+    source: "tracked via GA4 + server-side events",
+  },
+  {
+    value: 400,
+    suffix: "%+",
+    label: "Peak sales growth",
+    source: "achieved with Lord Milano in 8 months",
+  },
 ];
 
 export default function ImpactStrip() {
@@ -35,19 +62,36 @@ export default function ImpactStrip() {
             <Reveal
               key={m.label}
               delay={i * 0.08}
-              className="bg-[var(--color-bg)] p-7 sm:p-10"
+              className="bg-[var(--color-bg)]"
             >
-              <div className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)]">
-                <Counter
-                  to={m.value}
-                  prefix={m.prefix}
-                  suffix={m.suffix}
-                  decimals={m.decimals ?? 0}
-                />
-              </div>
-              <div className="mt-4 text-[0.75rem] uppercase tracking-[0.22em] text-[var(--color-fg-muted)]">
-                {m.label}
-              </div>
+              <motion.div
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                className="group relative h-full p-7 transition-colors duration-300 hover:bg-white/[0.02] sm:p-10"
+              >
+                <div className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)]">
+                  <Counter
+                    to={m.value}
+                    prefix={m.prefix}
+                    suffix={m.suffix}
+                    decimals={m.decimals ?? 0}
+                  />
+                </div>
+                <div className="mt-4 text-[0.75rem] uppercase tracking-[0.22em] text-[var(--color-fg-muted)]">
+                  {m.label}
+                </div>
+                <motion.p
+                  variants={{
+                    rest: { opacity: 0, y: 4 },
+                    hover: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="mt-3 text-xs text-[var(--color-fg-dim)]"
+                >
+                  {m.source}
+                </motion.p>
+              </motion.div>
             </Reveal>
           ))}
         </div>

@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "./Button";
+import StatusPill from "./StatusPill";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#about", label: "About" },
+  { href: "/#work", label: "Work" },
+  { href: "/#services", label: "Services" },
+  { href: "/posts", label: "Posts" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -65,10 +67,11 @@ export default function Nav() {
         </ul>
 
         <div className="hidden items-center gap-3 md:flex">
+          <StatusPill />
           <Button href="/cv" variant="ghost" size="sm">
             CV
           </Button>
-          <Button href="#contact" variant="primary" size="sm" withArrow>
+          <Button href="/#contact" variant="primary" size="sm" withArrow>
             Book a Call
           </Button>
         </div>
@@ -107,7 +110,7 @@ export default function Nav() {
                 View CV
               </Button>
               <Button
-                href="#contact"
+                href="/#contact"
                 variant="primary"
                 size="md"
                 className="flex-1"

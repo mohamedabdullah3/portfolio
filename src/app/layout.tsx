@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Inter_Tight, Instrument_Serif } from "next/font/go
 import "./globals.css";
 import NoiseOverlay from "@/components/ui/NoiseOverlay";
 import Cursor from "@/components/ui/Cursor";
+import MixpanelProvider from "@/components/MixpanelProvider";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -86,7 +87,7 @@ const personSchema = {
     addressCountry: "EG",
   },
   email: "mailto:mohamed.abdullah3877@gmail.com",
-  telephone: "+201146555118",
+  telephone: "+201020352362",
   url: SITE_URL,
   knowsAbout: [
     "Meta Ads",
@@ -116,7 +117,7 @@ export default function RootLayout({
         />
         <NoiseOverlay />
         <Cursor />
-        {children}
+        <MixpanelProvider>{children}</MixpanelProvider>
       </body>
     </html>
   );
