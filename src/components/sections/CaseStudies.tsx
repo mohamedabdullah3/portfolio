@@ -75,7 +75,12 @@ export default function CaseStudies() {
                         whileInView={{ scale: 1, opacity: 1 }}
                         viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        className="relative mt-10 inline-block font-display text-[clamp(3.5rem,9vw,6rem)] font-semibold leading-[0.9] tracking-[-0.05em] text-[var(--color-accent)] tabular"
+                        className={
+                          "relative mt-10 inline-block max-w-full font-display font-semibold leading-[0.95] tracking-[-0.04em] text-[var(--color-accent)] tabular " +
+                          (cs.metric.value.length > 6
+                            ? "text-[clamp(2.25rem,4.5vw,3.25rem)]"
+                            : "text-[clamp(3.5rem,9vw,6rem)] leading-[0.9] tracking-[-0.05em]")
+                        }
                       >
                         {cs.metric.value}
                         <motion.span
