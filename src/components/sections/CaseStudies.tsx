@@ -76,26 +76,28 @@ export default function CaseStudies() {
                         viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                         className={
-                          "relative mt-10 inline-block max-w-full font-display font-semibold leading-[0.95] tracking-[-0.04em] text-[var(--color-accent)] tabular " +
+                          "relative mt-10 inline-block max-w-full font-display font-semibold text-[var(--color-accent)] tabular " +
                           (cs.metric.value.length > 6
-                            ? "text-[clamp(2.25rem,4.5vw,3.25rem)]"
+                            ? "break-words text-[clamp(1.5rem,2.6vw,2rem)] leading-[1.1] tracking-[-0.02em]"
                             : "text-[clamp(3.5rem,9vw,6rem)] leading-[0.9] tracking-[-0.05em]")
                         }
                       >
                         {cs.metric.value}
-                        <motion.span
-                          aria-hidden
-                          initial={{ scaleX: 0 }}
-                          whileInView={{ scaleX: 1 }}
-                          viewport={{ once: true, amount: 0.4 }}
-                          transition={{
-                            duration: 0.7,
-                            delay: 0.25,
-                            ease: [0.16, 1, 0.3, 1],
-                          }}
-                          style={{ transformOrigin: "left" }}
-                          className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-[var(--color-accent)]/70"
-                        />
+                        {cs.metric.value.length <= 6 && (
+                          <motion.span
+                            aria-hidden
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: true, amount: 0.4 }}
+                            transition={{
+                              duration: 0.7,
+                              delay: 0.25,
+                              ease: [0.16, 1, 0.3, 1],
+                            }}
+                            style={{ transformOrigin: "left" }}
+                            className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-[var(--color-accent)]/70"
+                          />
+                        )}
                       </motion.div>
                       <div className="mt-4 text-sm text-[var(--color-fg-muted)]">
                         {cs.metric.label}
